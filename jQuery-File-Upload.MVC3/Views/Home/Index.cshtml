@@ -140,33 +140,33 @@ PER ACTION BASIS *@
 </script>
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-	<tr class="template-download fade">
-		{% if (file.error) { %}
-			<td></td>
-			<td class="name"><span>{%=file.name%}</span></td>
-			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-			<td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-		{% } else { %}
-			<td class="preview">
-			{% if (file.thumbnail_url) { %}
-				<a class="fancybox-button" data-rel="fancybox-button" href="{%=file.url%}" title="{%=file.name%}">
-				<img src="{%=file.thumbnail_url%}">
-				</a>
-			{% } %}</td>
-			<td class="name">
-				<a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+	{% for (var i=0, file; file=o.files[i]; i++) { %}
+		<tr class="template-download fade">
+			{% if (file.error) { %}
+				<td></td>
+				<td class="name"><span>{%=file.name%}</span></td>
+				<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+				<td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+			{% } else { %}
+				<td class="preview">
+				{% if (file.thumbnailUrl) { %}
+					<a class="fancybox-button" data-rel="fancybox-button" href="{%=file.url%}" title="{%=file.name%}">
+					<img src="{%=file.thumbnailUrl%}">
+					</a>
+				{% } %}</td>
+				<td class="name">
+					<a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnailUrl&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+				</td>
+				<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+				<td colspan="2"></td>
+			{% } %}
+			<td class="delete">
+				<button class="btn red" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+					<i class="icon-trash icon-white"></i>
+					<span>Delete</span>
+				</button>
+				<input type="checkbox" class="fileupload-checkbox hide" name="delete" value="1">
 			</td>
-			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-			<td colspan="2"></td>
-		{% } %}
-		<td class="delete">
-			<button class="btn red" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-				<i class="icon-trash icon-white"></i>
-				<span>Delete</span>
-			</button>
-			<input type="checkbox" class="fileupload-checkbox hide" name="delete" value="1">
-		</td>
-	</tr>
-{% } %}
+		</tr>
+	{% } %}
 </script>
