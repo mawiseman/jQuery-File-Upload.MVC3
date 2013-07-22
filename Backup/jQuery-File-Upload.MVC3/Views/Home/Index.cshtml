@@ -7,25 +7,26 @@
     Html.RequiresCss("Bootstrap/bootstrap-responsive.min.css", "Content", 3);
     Html.RequiresCss("Bootstrap/bootstrap-image-gallery.min.css", "Content", 4);
 
-    Html.RequiresCss("FileUpload/css/jquery.fileupload-ui.css", "Content", 5);
+    Html.RequiresCss("FileUpload/jquery.fileupload-ui.css", "Content", 5);
+    
     
     Html.RequiresJs("jquery/1.7.1/jquery.min.js", "googleCDN", 1);
     Html.RequiresJs("jqueryui/1.8.18/jquery-ui.min.js", "googleCDN", 2);
 
-    Html.RequiresJs("FileUpload/js/vendor/jquery.ui.widget.js", "Content", 5);
-    Html.RequiresJs("FileUpload/js/vendor/tmpl.min.js", "Content", 5);
-    Html.RequiresJs("FileUpload/js/vendor/load-image.min.js", "Content", 5);
-    Html.RequiresJs("FileUpload/js/vendor/canvas-to-blob.min.js", "Content", 5);
+    Html.RequiresJs("FileUpload/tmpl.min.js", "Content", 5);
+    Html.RequiresJs("FileUpload/canvas-to-blob.min.js", "Content", 5);
+    Html.RequiresJs("FileUpload/load-image.min.js", "Content", 5);
 
     Html.RequiresJs("Bootstrap/bootstrap-image-gallery.min.js", "Content", 6);
     Html.RequiresJs("Bootstrap/bootstrap.min.js", "Content", 6);
 
-    Html.RequiresJs("FileUpload/js/jquery.iframe-transport.js", "Content", 10);
-    Html.RequiresJs("FileUpload/js/jquery.fileupload.js", "Content", 10);
-    Html.RequiresJs("FileUpload/js/jquery.fileupload-fp.js", "Content", 20);
-    Html.RequiresJs("FileUpload/js/jquery.fileupload-ui.js", "Content", 30);
+    Html.RequiresJs("FileUpload/jquery.iframe-transport.js", "Content", 10);
+    Html.RequiresJs("FileUpload/jquery.fileupload.js", "Content", 10);
+    Html.RequiresJs("FileUpload/jquery.fileupload-ip.js", "Content", 20);
+    Html.RequiresJs("FileUpload/jquery.fileupload-ui.js", "Content", 30);
 
-    Html.RequiresJs("FileUpload/js/main.js", "Content", 99);
+    Html.RequiresJs("FileUpload/locale.js", "Content", 90);
+    Html.RequiresJs("FileUpload/main.js", "Content", 99);
 }
 
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
@@ -110,63 +111,60 @@ PER ACTION BASIS *@
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-	<tr class="template-upload fade">
-		<td class="preview"><span class="fade"></span></td>
-		<td class="name"><span>{%=file.name%}</span></td>
-		<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-		{% if (file.error) { %}
-			<td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-		{% } else if (o.files.valid && !i) { %}
-			<td>
-				<div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-			</td>
-			<td class="start">{% if (!o.options.autoUpload) { %}
-				<button class="btn">
-					<i class="icon-upload icon-white"></i>
-					<span>Start</span>
-				</button>
-			{% } %}</td>
-		{% } else { %}
-			<td colspan="2"></td>
-		{% } %}
-		<td class="cancel">{% if (!i) { %}
-			<button class="btn red">
-				<i class="icon-ban-circle icon-white"></i>
-				<span>Cancel</span>
-			</button>
-		{% } %}</td>
-	</tr>
+    <tr class="template-upload fade">
+        <td class="preview"><span class="fade"></span></td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-primary">
+                    <i class="icon-upload icon-white"></i>
+                    <span>{%=locale.fileupload.start%}</span>
+                </button>
+            {% } %}</td>
+        {% } else { %}
+            <td colspan="2"></td>
+        {% } %}
+        <td class="cancel">{% if (!i) { %}
+            <button class="btn btn-warning">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>{%=locale.fileupload.cancel%}</span>
+            </button>
+        {% } %}</td>
+    </tr>
 {% } %}
 </script>
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-	<tr class="template-download fade">
-		{% if (file.error) { %}
-			<td></td>
-			<td class="name"><span>{%=file.name%}</span></td>
-			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-			<td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-		{% } else { %}
-			<td class="preview">
-			{% if (file.thumbnail_url) { %}
-				<a class="fancybox-button" data-rel="fancybox-button" href="{%=file.url%}" title="{%=file.name%}">
-				<img src="{%=file.thumbnail_url%}">
-				</a>
-			{% } %}</td>
-			<td class="name">
-				<a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
-			</td>
-			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-			<td colspan="2"></td>
-		{% } %}
-		<td class="delete">
-			<button class="btn red" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-				<i class="icon-trash icon-white"></i>
-				<span>Delete</span>
-			</button>
-			<input type="checkbox" class="fileupload-checkbox hide" name="delete" value="1">
-		</td>
-	</tr>
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+            <td></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+        {% } else { %}
+            <td class="preview">{% if (file.thumbnail_url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+            {% } %}</td>
+            <td class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+            </td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td colspan="2"></td>
+        {% } %}
+        <td class="delete">
+            <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
+                <i class="icon-trash icon-white"></i>
+                <span>{%=locale.fileupload.destroy%}</span>
+            </button>
+            <input type="checkbox" name="delete" value="1">
+        </td>
+    </tr>
 {% } %}
 </script>

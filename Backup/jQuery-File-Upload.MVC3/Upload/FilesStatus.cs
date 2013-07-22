@@ -3,20 +3,20 @@ using System.IO;
 
 namespace jQuery_File_Upload.MVC3.Upload
 {
-    /// <summary>
-    /// https://github.com/maxpavlov/jQuery-File-Upload.MVC3
-    /// </summary>
     public class FilesStatus
     {
         public const string HandlerPath = "/Upload/";
 
-        public string url { get; set; }
-        public string thumbnailUrl { get; set; }
+        public string group { get; set; }
         public string name { get; set; }
         public string type { get; set; }
         public int size { get; set; }
-        public string deleteUrl { get; set; }
-        public string deleteType { get; set; }
+        public string progress { get; set; }
+        public string url { get; set; }
+        public string thumbnail_url { get; set; }
+        public string delete_url { get; set; }
+        public string delete_type { get; set; }
+        public string error { get; set; }
 
         public FilesStatus() { }
 
@@ -29,15 +29,16 @@ namespace jQuery_File_Upload.MVC3.Upload
             name = fileName;
             type = "image/png";
             size = fileLength;
+            progress = "1.0";
             url = HandlerPath + "UploadHandler.ashx?f=" + fileName;
-            deleteUrl = HandlerPath + "UploadHandler.ashx?f=" + fileName;
-            deleteType = "DELETE";
+            delete_url = HandlerPath + "UploadHandler.ashx?f=" + fileName;
+            delete_type = "DELETE";
 
             var ext = Path.GetExtension(fullPath);
-
+            
             var fileSize = ConvertBytesToMegabytes(new FileInfo(fullPath).Length);
-            if (fileSize > 3 || !IsImage(ext)) thumbnailUrl = "/Content/img/generalFile.png";
-            else thumbnailUrl = @"data:image/png;base64," + EncodeFile(fullPath);
+            if (fileSize > 3 || !IsImage(ext)) thumbnail_url = "/Content/img/generalFile.png";
+            else thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath);
         }
 
         private bool IsImage(string ext)

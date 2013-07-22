@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,15 +15,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,34 +85,16 @@
     <Content Include="Content\Bootstrap\bootstrap-responsive.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.js" />
-    <Content Include="Content\FileUpload\cors\postmessage.html" />
-    <Content Include="Content\FileUpload\cors\result.html" />
-    <Content Include="Content\FileUpload\css\jquery.fileupload-ui-noscript.css" />
-    <Content Include="Content\FileUpload\css\jquery.fileupload-ui.css" />
-    <Content Include="Content\FileUpload\css\style.css" />
-    <Content Include="Content\FileUpload\img\loading.gif" />
-    <Content Include="Content\FileUpload\img\progressbar.gif" />
-    <Content Include="Content\FileUpload\index.html" />
-    <Content Include="Content\FileUpload\js\cors\jquery.postmessage-transport.js" />
-    <Content Include="Content\FileUpload\js\cors\jquery.xdr-transport.js" />
-    <Content Include="Content\FileUpload\js\jquery.fileupload-fp.js" />
-    <Content Include="Content\FileUpload\js\jquery.fileupload-ui.js" />
-    <Content Include="Content\FileUpload\js\jquery.fileupload.js" />
-    <Content Include="Content\FileUpload\js\jquery.iframe-transport.js" />
-    <Content Include="Content\FileUpload\js\main.js" />
-    <Content Include="Content\FileUpload\js\vendor\canvas-to-blob.min.js" />
-    <Content Include="Content\FileUpload\js\vendor\jquery.ui.widget.js" />
-    <Content Include="Content\FileUpload\js\vendor\load-image.min.js" />
-    <Content Include="Content\FileUpload\js\vendor\tmpl.min.js" />
-    <Content Include="Content\FileUpload\server\gae-go\static\favicon.ico" />
-    <Content Include="Content\FileUpload\server\gae-go\static\robots.txt" />
-    <Content Include="Content\FileUpload\server\gae-python\static\favicon.ico" />
-    <Content Include="Content\FileUpload\server\gae-python\static\robots.txt" />
-    <Content Include="Content\FileUpload\server\node\server.js" />
-    <Content Include="Content\FileUpload\server\php\index.php" />
-    <Content Include="Content\FileUpload\server\php\UploadHandler.php" />
-    <Content Include="Content\FileUpload\test\index.html" />
-    <Content Include="Content\FileUpload\test\test.js" />
+    <Content Include="Content\FileUpload\canvas-to-blob.min.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload-ip.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload-ui.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload.js" />
+    <Content Include="Content\FileUpload\jquery.iframe-transport.js" />
+    <Content Include="Content\FileUpload\load-image.min.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload-ui.css" />
+    <Content Include="Content\FileUpload\locale.js" />
+    <Content Include="Content\FileUpload\main.js" />
+    <Content Include="Content\FileUpload\tmpl.min.js" />
     <Content Include="Content\img\generalFile.png" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\loading.gif" />
@@ -191,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\FileUpload\server\php\files\thumbnail\" />
     <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
@@ -200,29 +171,8 @@
   <ItemGroup>
     <Content Include="Upload\UploadHandler.ashx" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\FileUpload\.gitignore" />
-    <Content Include="Content\FileUpload\blueimp-file-upload.jquery.json" />
-    <Content Include="Content\FileUpload\CONTRIBUTING.md" />
-    <Content Include="Content\FileUpload\package.json" />
-    <Content Include="Content\FileUpload\README.md" />
-    <Content Include="Content\FileUpload\server\gae-go\app.yaml" />
-    <Content Include="Content\FileUpload\server\gae-go\app\main.go" />
-    <Content Include="Content\FileUpload\server\gae-python\app.yaml" />
-    <Content Include="Content\FileUpload\server\gae-python\main.py" />
-    <Content Include="Content\FileUpload\server\node\.gitignore" />
-    <Content Include="Content\FileUpload\server\node\package.json" />
-    <Content Include="Content\FileUpload\server\node\public\files\thumbnail\.gitignore" />
-    <Content Include="Content\FileUpload\server\node\tmp\.gitignore" />
-    <Content Include="Content\FileUpload\server\php\files\.htaccess" />
-  </ItemGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
